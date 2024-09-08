@@ -55,8 +55,7 @@ function mostrarExperimentos() {
 }
 
 
-
-// Función para asigar proyecto al directos correspondiente
+// Función para asigar proyecto al director correspondiente
 function asignarProyecto(nombreProyecto) {
     switch (nombreProyecto.toLowerCase()) {
         case 'insecticida':
@@ -77,6 +76,41 @@ function asignarProyecto(nombreProyecto) {
     }
 }
 
+// Función para generar el siguiente número consecutivo
+function generarConsecutivo(experimentos, nombreProyecto) {
+    let ultimoExperimento = experimentos[experimentos.length - 1];
+    let numero = parseInt(ultimoExperimento.split('-')[1]) + 1; // Extraer el número y sumarle 1
+    let nuevoExperimento = `${nombreProyecto.toUpperCase()}-${String(numero).padStart(3, '0')}`;
+    return nuevoExperimento;
+}
+
+// Función para agregar el nuevo proyecto al arreglo de valores
+function agregarProyecto(nombreProyecto) {
+    switch (nombreProyecto.toLowerCase()) {
+        case 'insecticida':
+            let nuevoInsecticida = generarConsecutivo(experimentosInsecticidas, nombreProyecto);
+            experimentosInsecticidas.push(nuevoInsecticida);
+            alert(`Nuevo proyecto "${nuevoInsecticida}" asignado.`);
+            break;
+        case 'fungicida':
+            let nuevoFungicida = generarConsecutivo(experimentosFungicidas, nombreProyecto);
+            experimentosFungicidas.push(nuevoFungicida);
+            alert(`Nuevo proyecto "${nuevoFungicida}" asignado.`);
+            break;
+        case 'herbicida':
+            let nuevoHerbicida = generarConsecutivo(experimentosHerbicidas, nombreProyecto);
+            experimentosHerbicidas.push(nuevoHerbicida);
+            alert(`Nuevo proyecto "${nuevoHerbicida}" asignado.`);
+            break;
+        case 'nematicida':
+            let nuevoNematicida = generarConsecutivo(experimentosNematicidas, nombreProyecto);
+            experimentosNematicidas.push(nuevoNematicida);
+            alert(`Nuevo proyecto "${nuevoNematicida}" asignado.`);
+            break;
+        default:
+            alert('Proyecto no válido');
+    }
+}
 
 let usuario = prompt('Ingresa nombre completo (omitir acentos)');
 usuario = usuario.toLowerCase();
@@ -111,28 +145,21 @@ if (nuevoProyecto == false) {
     }
 
 } else {
+    let nombreProyecto;
     
-    let nombreProyecto = prompt('Selecciona área del experimento (insecticida, fungicida, herbicida, nematicida');
-
-    function agregarProyecto() { // Función para agregar el nuevo proyecto al arreglo de valores
-        if (nombreProyecto == 'insecticida') {
-            experimentosInsecticidas.push(nombreProyecto); // Agregar el nuevo proyecto al final del array
-            alert(`Nuevo proyecto "${nombreProyecto}" asignado.`);
-    
-        } else if (nombreProyecto == 'fungicida') {
-            experimentosFungicidas.push(nombreProyecto); // Agregar el nuevo proyecto al final del array
-            alert(`Nuevo proyecto "${nombreProyecto}" asignado.`);
-    
-        } else if (nombreProyecto == 'herbicida') {
-            experimentosFungicidas.push(nombreProyecto); // Agregar el nuevo proyecto al final del array
-            alert(`Nuevo proyecto "${nombreProyecto}" asignado.`);
-    
+    while (true) {
+        nombreProyecto = prompt('Selecciona área del experimento (insecticida, fungicida, herbicida, nematicida)');
+        if (['insecticida', 'fungicida', 'herbicida', 'nematicida'].includes(nombreProyecto.toLowerCase())) {
+            agregarProyecto(nombreProyecto);
+            asignarProyecto(nombreProyecto);
+            break;
         } else {
-            experimentosFungicidas.push(nombreProyecto); // Agregar el nuevo proyecto al final del array
-            alert(`Nuevo proyecto "${nombreProyecto}" asignado.`);
+            alert('Área no válida, intenta de nuevo.');
         }
     }
-   
-    agregarProyecto();
-    asignarProyecto(nombreProyecto);
 }
+
+
+
+
+
